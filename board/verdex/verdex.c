@@ -75,8 +75,10 @@ void dram_init_banksize(void)
 
 
 #ifdef CONFIG_DRIVER_SMC911X
+/*
 int board_eth_init(bd_t *bis)
 {
-	return smc911x_initialize(bis);
+	return smc911x_initialize(0, CONFIG_SMC911X_BASE);
 }
+*/
 #endif

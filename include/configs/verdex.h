@@ -40,9 +40,6 @@
 	"if mmc init && fatload mmc 0 0xa4000000 uImage; then "		\
 		"bootm 0xa4000000; "					\
 	"fi; "								\
-	"if usb reset && fatload usb 0 0xa4000000 uImage; then "	\
-		"bootm 0xa4000000; "					\
-	"fi; "								\
 	"if ide reset && fatload ide 0 0xa4000000 uImage; then "	\
 		"bootm 0xa4000000; "					\
 	"fi; "								\
@@ -72,17 +69,8 @@
 #define	CONFIG_CMD_ENV
 #undef	CONFIG_CMD_IMLS
 #define	CONFIG_CMD_MMC
-#define	CONFIG_CMD_USB
-#undef	CONFIG_LCD
 #define	CONFIG_CMD_IDE
-
-#ifdef	CONFIG_ONENAND
-#undef	CONFIG_CMD_FLASH
-#define	CONFIG_CMD_ONENAND
-#else
 #define	CONFIG_CMD_FLASH
-#undef	CONFIG_CMD_ONENAND
-#endif
 
 /*
  * Networking Configuration
