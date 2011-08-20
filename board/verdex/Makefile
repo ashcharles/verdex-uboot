@@ -1,8 +1,9 @@
 #
-# Gumstix Verdex (PXA270) Support
+# (C) Copyright 2000, 2001, 2002
+# Wolfgang Denk, DENX Software Engineering, wd@denx.de.
 #
-# Copyright (C) 2011 Ash Charles <ashcharles@gmail.com>
-#   Based off vpac270 Makefile
+# See file CREDITS for list of people who contributed to this
+# project.
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -43,6 +44,5 @@ distclean:	clean
 # defines $(obj).depend target
 include $(SRCTREE)/rules.mk
 
-sinclude $(obj).depend
-
 #########################################################################
+sinclude $(obj).depend
