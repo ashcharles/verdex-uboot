@@ -57,7 +57,7 @@ HOSTARCH := $(shell uname -m | \
 HOSTOS := $(shell uname -s | tr A-Z a-z | \
 	sed -e 's/\(cygwin\).*/cygwin/')
 
-TOOLSUBDIRS = env
+TOOLSUBDIRS = 
 
 HOST_CFLAGS = -Wall -pedantic
 HOST_LDFLAGS =
