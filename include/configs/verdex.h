@@ -145,14 +145,14 @@
 /*
  * Clock Configuration
  */
-#define	CONFIG_SYS_HZ			1000		/* Timer @ 3250000 Hz */
-#define	CONFIG_SYS_CPUSPEED		0x310		/* 312MHz */
+#undef	CONFIG_SYS_CLKS_IN_HZ
+#define	CONFIG_SYS_HZ			3686400 	/* Timer @ 3250000 Hz */
+#define	CONFIG_SYS_CPUSPEED		0x310		/* 624 MHz */
 
 /*
  * Stack sizes
  */
 #define	CONFIG_STACKSIZE		(128*1024)	/* regular stack */
-#undef	CONFIG_USE_IRQ
 #ifdef	CONFIG_USE_IRQ
 #define	CONFIG_STACKSIZE_IRQ		(4*1024)	/* IRQ stack */
 #define	CONFIG_STACKSIZE_FIQ		(4*1024)	/* FIQ stack */
@@ -161,21 +161,12 @@
 /*
  * DRAM Map
  */
-#define	CONFIG_NR_DRAM_BANKS		4		/* 4 banks of DRAM */
-#define	PHYS_SDRAM_1			0xa0000000	/* SDRAM Bank #1 */
-#define	PHYS_SDRAM_1_SIZE		0x01000000	/* 16 MB */
+#define	CONFIG_NR_DRAM_BANKS		1		/* 4 banks of DRAM */
+#define	PHYS_SDRAM_1			0xA0000000	/* SDRAM Bank #1 */
+#define	PHYS_SDRAM_1_SIZE		0x08000000	/* 32 MB */
 
-#define	PHYS_SDRAM_2			0xb0000000	/* SDRAM Bank #2 */
-#define	PHYS_SDRAM_2_SIZE		0x01000000	/* 16 MB */
-
-#define	PHYS_SDRAM_3			0x80000000	/* SDRAM Bank #3 */
-#define	PHYS_SDRAM_3_SIZE		0x01000000	/* 16 MB */
-
-#define	PHYS_SDRAM_4			0x90000000	/* SDRAM Bank #4 */
-#define	PHYS_SDRAM_4_SIZE		0x01000000	/* 16 MB */
-
-#define	CONFIG_SYS_DRAM_BASE		0xa0000000	/* CS0 */
-#define	CONFIG_SYS_DRAM_SIZE		0x04000000	/* 128 MB DRAM */
+#define	CONFIG_SYS_DRAM_BASE		0xA0000000	/* CS0 */
+#define	CONFIG_SYS_DRAM_SIZE		0x08000000	/* 128 MB DRAM */
 
 #define	CONFIG_SYS_MEMTEST_START	0xa0400000	/* memtest works on */
 #define	CONFIG_SYS_MEMTEST_END		0xa0800000	/* 4 ... 8 MB in DRAM */
@@ -279,13 +270,13 @@
  * Memory settings
  */
 #define	CONFIG_SYS_MDCNFG_VAL	0x8AD00AD0
-#define	CONFIG_SYS_MSC0_VAL	0x00000000
-#define	CONFIG_SYS_MSC1_VAL	0x00000000
-#define	CONFIG_SYS_MSC2_VAL	0x00000000
-#define	CONFIG_SYS_MDREFR_VAL	0x00000000
-#define	CONFIG_SYS_MDMRS_VAL	0x00000000
+#define	CONFIG_SYS_MDREFR_VAL	0x2015C001
+#define	CONFIG_SYS_MSC0_VAL	0x033c35d8
+#define	CONFIG_SYS_MSC1_VAL	0x033c35d8
+#define	CONFIG_SYS_MSC2_VAL	0x033c35d8
+#define	CONFIG_SYS_MDMRS_VAL	0x00320032
 #define	CONFIG_SYS_FLYCNFG_VAL	0x00000000
-#define	CONFIG_SYS_SXCNFG_VAL	0x00000000
+#define	CONFIG_SYS_SXCNFG_VAL	0x40044004
 
 /*
  * PCMCIA and CF Interfaces

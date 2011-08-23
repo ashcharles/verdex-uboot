@@ -66,12 +66,6 @@ void dram_init_banksize(void)
 {
 	gd->bd->bi_dram[0].start = PHYS_SDRAM_1;
 	gd->bd->bi_dram[0].size = PHYS_SDRAM_1_SIZE;
-	gd->bd->bi_dram[1].start = PHYS_SDRAM_2;
-	gd->bd->bi_dram[1].size = PHYS_SDRAM_2_SIZE;
-	gd->bd->bi_dram[2].start = PHYS_SDRAM_3;
-	gd->bd->bi_dram[2].size = PHYS_SDRAM_3_SIZE;
-	gd->bd->bi_dram[3].start = PHYS_SDRAM_4;
-	gd->bd->bi_dram[3].size = PHYS_SDRAM_4_SIZE;
 }
 
 
