@@ -253,7 +253,7 @@
 #define CFG_FLASH_BASE		PHYS_FLASH_1
 #define CFG_FLASH_CFI				/* flash is CFI conformant	*/
 #define CFG_FLASH_CFI_DRIVER			/* use common cfi driver	*/
-#undef CFG_FLASH_USE_BUFFER_WRITE 		/* use buffered writes (20x faster) */
+#define CFG_FLASH_USE_BUFFER_WRITE 1		/* use buffered writes (20x faster) */
 #define CFG_MAX_FLASH_BANKS	1		/* max # of memory banks	*/
 #define CFG_MAX_FLASH_SECT	512		/* max # of sectors on one chip	*/
 #define CFG_FLASH_PROTECTION			/* use hardware flash protection */
