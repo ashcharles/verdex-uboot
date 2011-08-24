@@ -206,14 +206,14 @@ int misc_init_r(void)
 		system_serial[5] >>= 6;
 		system_serial[5] |= addr[0];
 	} else {
-		flash_read_user_serial(flash_info, (void *)system_serial, 0, 8);
+		//flash_read_user_serial(flash_info, (void *)system_serial, 0, 8);
 	}
 
 	if(0xff == (system_serial[0] & system_serial[1] & system_serial[2] & system_serial[3] &
 		system_serial[4] & system_serial[5] & system_serial[6] & system_serial[7]))
 	{
 		// User serial number is all ones, so use the factory serial number
-		flash_read_factory_serial(flash_info, (void *)system_serial, 0, 8);
+		//flash_read_factory_serial(flash_info, (void *)system_serial, 0, 8);
 		gumstix_serial_hash(system_serial);
 	} else {
 		// User serial numbers are most easily programmed sequentially (incrementing by 1).
@@ -240,5 +240,5 @@ int misc_init_r(void)
 	// MAC will actually get set to the card in lib_arm/board.c after misc_init returns
 
 	// Now unprotect the linux part of flash...
-	flash_protect(FLAG_PROTECT_CLEAR, PHYS_FLASH_SECT_SIZE*2, flash_info[0].start[0] + flash_info[0].size - 1, &(flash_info[0]));
+//	flash_protect(FLAG_PROTECT_CLEAR, PHYS_FLASH_SECT_SIZE*2, flash_info[0].start[0] + flash_info[0].size - 1, &(flash_info[0]));
 }
