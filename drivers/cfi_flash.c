@@ -32,7 +32,7 @@
  */
 
 /* The DEBUG define must be before common to enable debugging */
-/* #define DEBUG	*/
+#define DEBUG
 
 #include <common.h>
 #include <asm/processor.h>
@@ -698,12 +698,23 @@ int flash_real_protect (flash_info_t * info, long sector, int prot)
 {
 	int retcode = 0;
 
-	flash_write_cmd (info, sector, 0, FLASH_CMD_CLEAR_STATUS);
-	flash_write_cmd (info, sector, 0, FLASH_CMD_PROTECT);
-	if (prot)
-		flash_write_cmd (info, sector, 0, FLASH_CMD_PROTECT_SET);
-	else
-		flash_write_cmd (info, sector, 0, FLASH_CMD_PROTECT_CLEAR);
+        flash_write_cmd (info, sector, 0, FLASH_CMD_READ_ID);
+        if (!flash_isequal (info, sector, FLASH_OFFSET_PROTECT,
+                            prot)) {
+        	int flag = disable_interrupts ();
+                unsigned short cmd;
+                if (prot)
+                	cmd = FLASH_CMD_PROTECT_SET;
+		else
+			cmd = FLASH_CMD_PROTECT_CLEAR;
+
+		flash_write_cmd (info, sector, 0,
+	       			 FLASH_CMD_PROTECT);
+                flash_write_cmd (info, sector, 0, cmd);
+                /* re-enable interrupts if necessary */
+                if (flag)
+                	enable_interrupts ();
+	}
 
 	if ((retcode =
 	     flash_full_status_check (info, sector, info->erase_blk_tout,

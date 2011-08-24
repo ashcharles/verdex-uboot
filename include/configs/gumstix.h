@@ -255,7 +255,7 @@
 #define CFG_FLASH_CFI_DRIVER			/* use common cfi driver	*/
 #define CFG_FLASH_USE_BUFFER_WRITE 1		/* use buffered writes (20x faster) */
 #define CFG_MAX_FLASH_BANKS	1		/* max # of memory banks	*/
-#define CFG_MAX_FLASH_SECT	512		/* max # of sectors on one chip	*/
+#define CFG_MAX_FLASH_SECT	260		/* max # of sectors on one chip	*/
 #define CFG_FLASH_PROTECTION			/* use hardware flash protection */
 
 #define CFG_ENV_IS_IN_FLASH
