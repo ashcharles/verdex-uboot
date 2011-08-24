@@ -32,7 +32,7 @@
  */
 
 /* The DEBUG define must be before common to enable debugging */
-#define DEBUG
+//#define DEBUG
 
 #include <common.h>
 #include <asm/processor.h>
@@ -609,7 +609,6 @@ int write_buff (flash_info_t * info, uchar * src, ulong addr, ulong cnt)
 	int buffered_size;
 #endif
 	/* get lower aligned address */
-	/* get lower aligned address */
 	wp = (addr & ~(info->portwidth - 1));
 
 	/* handle unaligned start */
@@ -635,6 +634,7 @@ int write_buff (flash_info_t * info, uchar * src, ulong addr, ulong cnt)
 #ifdef CFG_FLASH_USE_BUFFER_WRITE
 	buffered_size = (info->portwidth / info->chipwidth);
 	buffered_size *= info->buffer_size;
+        buffered_size = 512;
 	while (cnt >= info->portwidth) {
 		/* prohibit buffer write when buffer_size is 1 */
 		if (info->buffer_size == 1) {
@@ -697,43 +697,27 @@ int write_buff (flash_info_t * info, uchar * src, ulong addr, ulong cnt)
 int flash_real_protect (flash_info_t * info, long sector, int prot)
 {
 	int retcode = 0;
+        int flag;
+        unsigned short cmd;
 
         flash_write_cmd (info, sector, 0, FLASH_CMD_READ_ID);
-        if (!flash_isequal (info, sector, FLASH_OFFSET_PROTECT,
-                            prot)) {
-        	int flag = disable_interrupts ();
-                unsigned short cmd;
-                if (prot)
-                	cmd = FLASH_CMD_PROTECT_SET;
+        if (!flash_isequal (info, sector, FLASH_OFFSET_PROTECT, prot)) {
+		if (prot)
+			cmd = FLASH_CMD_PROTECT_SET;
 		else
 			cmd = FLASH_CMD_PROTECT_CLEAR;
+		flag = disable_interrupts ();
+		flash_write_cmd (info, sector, 0, FLASH_CMD_PROTECT);
+		flash_write_cmd (info, sector, 0, cmd);
+		if (flag)
+			enable_interrupts ();
 
-		flash_write_cmd (info, sector, 0,
-	       			 FLASH_CMD_PROTECT);
-                flash_write_cmd (info, sector, 0, cmd);
-                /* re-enable interrupts if necessary */
-                if (flag)
-                	enable_interrupts ();
-	}
-
+        }
+	flash_write_cmd(info, sector, 0, 0x70);
 	if ((retcode =
 	     flash_full_status_check (info, sector, info->erase_blk_tout,
-				      prot ? "protect" : "unprotect")) == 0) {
-
+	                              prot ? "protect" : "unprotect"))) {
 		info->protect[sector] = prot;
-
-		/*
-		 * On some of Intel's flash chips (marked via legacy_unlock)
-		 * unprotect unprotects all locking.
-		 */
-		if ((prot == 0) && (info->legacy_unlock)) {
-			flash_sect_t i;
-
-			for (i = 0; i < info->sector_count; i++) {
-				if (info->protect[i])
-					flash_real_protect (info, i, 1);
-			}
-		}
 	}
 	return retcode;
 }
@@ -1448,6 +1432,7 @@ static int flash_write_cfibuffer (flash_info_t * info, ulong dest, uchar * cp,
 		dst.cp = (uchar *) dest;
 		sector = find_sector (info, dest);
 		flash_write_cmd (info, sector, 0, FLASH_CMD_CLEAR_STATUS);
+		flash_write_cmd (info, sector, 0, 0x70);
 		flash_write_cmd (info, sector, 0, FLASH_CMD_WRITE_TO_BUFFER);
 		if ((retcode = flash_status_check (info, sector, info->buffer_write_tout,
 						   "write to buffer")) == ERR_OK) {
