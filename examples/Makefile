@@ -67,10 +67,6 @@ ELF	= gumstix_serial_otp
 SREC	= gumstix_serial_otp.srec
 BIN	= gumstix_serial_otp.bin
 
-ELF	+= hello_world
-SREC	+= hello_world.srec
-BIN	+= hello_world.bin
-
 ifeq ($(CPU),mpc8xx)
 ELF	= test_burst
 SREC	= test_burst.srec
