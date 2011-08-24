@@ -634,6 +634,7 @@ int write_buff (flash_info_t * info, uchar * src, ulong addr, ulong cnt)
 #ifdef CFG_FLASH_USE_BUFFER_WRITE
 	buffered_size = (info->portwidth / info->chipwidth);
 	buffered_size *= info->buffer_size;
+	/* override buffer size */
         buffered_size = 512;
 	while (cnt >= info->portwidth) {
 		/* prohibit buffer write when buffer_size is 1 */
@@ -701,7 +702,7 @@ int flash_real_protect (flash_info_t * info, long sector, int prot)
         unsigned short cmd;
 
         flash_write_cmd (info, sector, 0, FLASH_CMD_READ_ID);
-        if (!flash_isequal (info, sector, FLASH_OFFSET_PROTECT, prot)) {
+        flash_isequal (info, sector, FLASH_OFFSET_PROTECT, prot);
 		if (prot)
 			cmd = FLASH_CMD_PROTECT_SET;
 		else
@@ -711,12 +712,10 @@ int flash_real_protect (flash_info_t * info, long sector, int prot)
 		flash_write_cmd (info, sector, 0, cmd);
 		if (flag)
 			enable_interrupts ();
-
-        }
 	flash_write_cmd(info, sector, 0, 0x70);
 	if ((retcode =
 	     flash_full_status_check (info, sector, info->erase_blk_tout,
-	                              prot ? "protect" : "unprotect"))) {
+	                              prot ? "protect" : "unprotect")) == 0) {
 		info->protect[sector] = prot;
 	}
 	return retcode;
