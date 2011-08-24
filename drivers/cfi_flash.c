@@ -635,7 +635,7 @@ int write_buff (flash_info_t * info, uchar * src, ulong addr, ulong cnt)
 	buffered_size = (info->portwidth / info->chipwidth);
 	buffered_size *= info->buffer_size;
 	/* override buffer size */
-        buffered_size = 512;
+        //buffered_size = 512;
 	while (cnt >= info->portwidth) {
 		/* prohibit buffer write when buffer_size is 1 */
 		if (info->buffer_size == 1) {
@@ -1453,7 +1453,7 @@ static int flash_write_cfibuffer (flash_info_t * info, ulong dest, uchar * cp,
 				return ERR_INVAL;
 				break;
 			}
-			flash_write_cmd (info, sector, 0, (uchar) cnt - 1);
+			flash_write_cmd (info, sector, 0, cnt - 1);
 			while (cnt-- > 0) {
 				switch (info->portwidth) {
 				case FLASH_CFI_8BIT:
