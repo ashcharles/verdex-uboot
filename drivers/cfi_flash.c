@@ -635,7 +635,7 @@ int write_buff (flash_info_t * info, uchar * src, ulong addr, ulong cnt)
 	buffered_size = (info->portwidth / info->chipwidth);
 	buffered_size *= info->buffer_size;
 	/* override buffer size */
-        //buffered_size = 512;
+        buffered_size = 512;
 	while (cnt >= info->portwidth) {
 		/* prohibit buffer write when buffer_size is 1 */
 		if (info->buffer_size == 1) {
